@@ -3,24 +3,33 @@ import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Navbar = () => {
-    const {user , signOutUser} = useContext(AuthContext);
+    const { user, signOutUser } = useContext(AuthContext);
 
-    const handleSignOut = ()=>{
+    const handleSignOut = () => {
 
         signOutUser()
-        .then(()=>{
-            console.log('User signed out successfully!');
-        })
-        .catch((error)=>{
-            console.log('Error here' ,  error.message);
-        });
+            .then(() => {
+                console.log('User signed out successfully!');
+            })
+            .catch((error) => {
+                console.log('Error here', error.message);
+            });
 
     };
-      const links = <>
-                  <li><NavLink  to='/'>Home</NavLink></li>
-                  <li><NavLink to='/login'>Login</NavLink></li>
-                  <li><NavLink to='/register'>Register</NavLink></li>
-                  </>
+    const links = <>
+        <li><NavLink to='/'>Home</NavLink></li>
+        <li><NavLink to='/login'>Login</NavLink></li>
+        <li><NavLink to='/register'>Register</NavLink></li>
+        {
+            user &&
+            <>
+
+                <li><NavLink to='/order'>Order</NavLink></li>
+
+
+            </>
+        }
+    </>
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -54,19 +63,19 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user?
-                    <>
-                    
-                        <span>{user.email}</span> 
-                        <a onClick={handleSignOut} className="btn">Sign Out</a>
-                         </>
-                      
+                    user ?
+                        <>
+
+                            <span>{user.email}</span>
+                            <a onClick={handleSignOut} className="btn">Sign Out</a>
+                        </>
+
 
                         : <Link to='/login'>Login</Link>
-                    
-                   
-                    
-                    
+
+
+
+
                 }
             </div>
         </div>
